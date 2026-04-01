@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DANGER LAND — TERMINAL</title>
     <style>
-        :root { --toxic: #39ff14; --warning: #ffcc00; --dead-zone: #050505; --alert: #ff3e3e; }
+        :root { --toxic: #39ff14; --warning: #ffcc00; --dead-zone: #050505; --alert: #ff3e3e; --vk: #0077ff; --tg: #24A1DE; --ds: #5865F2; }
         
         body { 
             background: var(--dead-zone); 
@@ -20,7 +20,6 @@
             text-align: center;
         }
 
-        /* Эффект мерцания экрана */
         body::after {
             content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
             background: rgba(18, 16, 16, 0.1); opacity: 0; z-index: 2; pointer-events: none;
@@ -61,13 +60,41 @@
         }
         .btn:hover { background: var(--toxic); color: #000; }
 
-        /* Особые стили */
         .danger-card { border: 1px solid var(--warning); box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.1); }
         .danger-card .name, .danger-card .new { color: var(--warning); }
         .danger-card .btn { border-color: var(--warning); color: var(--warning); }
         .danger-card .btn:hover { background: var(--warning); color: #000; }
 
-        footer { margin-top: 80px; padding: 40px; border-top: 1px solid #222; color: #444; font-size: 0.8em; }
+        /* Соцсети в ряд */
+        .socials-container {
+            margin-top: 60px;
+            background: rgba(255,255,255,0.02);
+            padding: 30px;
+            border-top: 1px solid #222;
+        }
+        .socials-title { color: #fff; font-size: 1.2em; margin-bottom: 20px; letter-spacing: 3px; }
+        .socials-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        
+        .soc-btn {
+            text-decoration: none;
+            padding: 12px 30px;
+            font-weight: bold;
+            font-size: 0.9em;
+            border-radius: 4px;
+            transition: 0.3s;
+            border: 1px solid transparent;
+            color: #fff;
+        }
+        .vk { background: rgba(0, 119, 255, 0.15); border-color: var(--vk); color: var(--vk); }
+        .vk:hover { background: var(--vk); color: #fff; box-shadow: 0 0 20px var(--vk); }
+        
+        .tg { background: rgba(36, 161, 222, 0.15); border-color: var(--tg); color: var(--tg); }
+        .tg:hover { background: var(--tg); color: #fff; box-shadow: 0 0 20px var(--tg); }
+        
+        .ds { background: rgba(88, 101, 242, 0.15); border-color: var(--ds); color: var(--ds); }
+        .ds:hover { background: var(--ds); color: #fff; box-shadow: 0 0 20px var(--ds); }
+
+        footer { padding: 40px; color: #444; font-size: 0.8em; }
     </style>
 </head>
 <body>
@@ -80,74 +107,75 @@
     </div>
 
     <div class="grid">
-        <!-- Scavenger -->
         <div class="card">
             <img src="1.png" alt="Rank">
             <div class="name">Scavenger</div>
             <div class="price"><span class="old">58р.</span> <span class="new">29р.</span></div>
-            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
+            <a href="https://donationalerts.com" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
 
-        <!-- Stalker -->
         <div class="card">
             <img src="2.png" alt="Rank">
             <div class="name">Stalker</div>
             <div class="price"><span class="old">198р.</span> <span class="new">99р.</span></div>
-            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
+            <a href="https://donationalerts.com" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
 
-        <!-- Nomad -->
         <div class="card">
             <img src="3.png" alt="Rank">
             <div class="name">Nomad</div>
             <div class="price"><span class="old">350р.</span> <span class="new">175р.</span></div>
-            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
+            <a href="https://donationalerts.com" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
 
-        <!-- Raider -->
         <div class="card">
             <img src="4.png" alt="Rank">
             <div class="name">Raider</div>
             <div class="price"><span class="old">590р.</span> <span class="new">295р.</span></div>
-            <a href="https://donationalerts.com5" class="btn">ВЫКУПИТЬ</a>
+            <a href="https://donationalerts.com5" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
 
-        <!-- Mercenary -->
         <div class="card">
             <img src="5.png" alt="Rank">
             <div class="name">Mercenary</div>
             <div class="price"><span class="old">850р.</span> <span class="new">425р.</span></div>
-            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
+            <a href="https://donationalerts.com" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
 
-        <!-- Hunter -->
         <div class="card">
             <img src="6.png" alt="Rank">
             <div class="name">Hunter</div>
             <div class="price"><span class="old">1900р.</span> <span class="new">950р.</span></div>
-            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
+            <a href="https://donationalerts.com" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
 
-        <!-- Survivor -->
         <div class="card">
             <img src="7.png" alt="Rank">
             <div class="name">Survivor</div>
             <div class="price"><span class="old">3200р.</span> <span class="new">1600р.</span></div>
-            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
+            <a href="https://donationalerts.com" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
 
-        <!-- Danger -->
         <div class="card danger-card">
             <img src="8.png" alt="Rank">
             <div class="name">DANGER</div>
             <div class="price"><span class="old">5990р.</span> <span class="new">2950р.</span></div>
-            <a href="https://donationalerts.com50" class="btn">ВЫЖИТЬ</a>
+            <a href="https://donationalerts.com50" class="btn" target="_blank">ВЫЖИТЬ</a>
+        </div>
+    </div>
+
+    <div class="socials-container">
+        <div class="socials-title">НАШИ СОЦИАЛЬНЫЕ СЕТИ</div>
+        <div class="socials-row">
+            <a href="https://vk.ru" class="soc-btn vk" target="_blank">ВКОНТАКТЕ</a>
+            <a href="https://t.me" class="soc-btn tg" target="_blank">ТЕЛЕГРАМ</a>
+            <a href="https://discord.gg" class="soc-btn ds" target="_blank">DISCORD</a>
         </div>
     </div>
 
     <footer>
         <p>ВНИМАНИЕ: УКАЗЫВАЙТЕ НИК В СООБЩЕНИИ. ОШИБКА ВЕДЕТ К ПОТЕРЕ РЕСУРСОВ.</p>
-        <p>TERMINAL v2.6 // DANGER LAND PROJECT</p>
+        <p>TERMINAL v2.9 // DANGER LAND PROJECT</p>
     </footer>
 
     <script>
