@@ -3,229 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DANGER LAND — Магазин выживания</title>
+    <title>DANGER LAND — TERMINAL</title>
     <style>
-        :root {
-            --neon-green: #39ff14;
-            --toxic-yellow: #dbff00;
-            --dark-zone: #0a0a0a;
-            --danger-red: #ff3e3e;
-        }
-
-        body {
-            background-color: var(--dark-zone);
-            color: #e0e0e0;
-            font-family: 'Courier New', monospace;
-            margin: 0;
+        :root { --toxic: #39ff14; --warning: #ffcc00; --dead-zone: #050505; --alert: #ff3e3e; }
+        
+        body { 
+            background: var(--dead-zone); 
+            color: #aaa; 
+            font-family: 'Courier New', Courier, monospace; 
+            margin: 0; 
             padding: 20px;
+            background-image: 
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 3px 100%;
             text-align: center;
-            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
-            background-size: 30px 30px;
         }
 
-        /* Заголовок и IP */
-        header { margin-bottom: 40px; }
-        h1 { 
-            color: var(--toxic-yellow); 
-            font-size: clamp(2.5em, 8vw, 4em); 
-            margin: 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            filter: drop-shadow(0 0 10px rgba(219, 255, 0, 0.4));
+        /* Эффект мерцания экрана */
+        body::after {
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: rgba(18, 16, 16, 0.1); opacity: 0; z-index: 2; pointer-events: none;
+            animation: flicker 0.15s infinite;
+        }
+        @keyframes flicker { 0% { opacity: 0.1; } 100% { opacity: 0.2; } }
+
+        h1 { color: var(--toxic); font-size: 4em; letter-spacing: 10px; margin: 20px 0; text-shadow: 0 0 15px var(--toxic); }
+        
+        .ip-block {
+            border: 1px solid var(--toxic); display: inline-block; padding: 15px 30px;
+            background: rgba(57, 255, 20, 0.05); cursor: pointer; margin-bottom: 40px;
+        }
+        .ip-block:hover { background: var(--toxic); color: #000; box-shadow: 0 0 20px var(--toxic); }
+        .ip-address { font-size: 1.5em; font-weight: bold; display: block; }
+
+        .grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; max-width: 1300px; margin: 0 auto; 
         }
 
-        .server-ip {
-            display: inline-block;
-            padding: 15px 25px;
-            border: 2px solid var(--neon-green);
-            background: rgba(57, 255, 20, 0.05);
-            cursor: pointer;
-            transition: 0.3s;
-            margin-bottom: 20px;
+        .card { 
+            background: rgba(20, 20, 20, 0.8); border: 1px solid #333; padding: 20px;
+            transition: 0.3s; position: relative; overflow: hidden;
         }
-        .server-ip:hover { background: rgba(57, 255, 20, 0.15); transform: scale(1.05); }
-        .ip-label { font-size: 0.8em; color: #888; display: block; margin-bottom: 5px; }
-        .ip-address { font-size: 1.5em; color: var(--neon-green); font-weight: bold; }
+        .card:hover { border-color: var(--toxic); transform: translateY(-5px); box-shadow: 0 0 15px rgba(57, 255, 20, 0.1); }
+        
+        .card img { width: 100%; height: 150px; object-fit: cover; background: #111; margin-bottom: 15px; border: 1px solid #222; }
 
-        .promo-text {
-            color: var(--danger-red);
-            font-weight: bold;
-            animation: pulse 2s infinite;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .name { font-size: 1.6em; color: #fff; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .price { margin: 15px 0; }
+        .old { text-decoration: line-through; color: #555; font-size: 0.9em; }
+        .new { font-size: 2em; color: var(--toxic); font-weight: bold; }
 
-        /* Сетка товаров */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .btn { 
+            display: block; padding: 12px; border: 1px solid var(--toxic); color: var(--toxic);
+            text-decoration: none; font-weight: bold; transition: 0.3s;
         }
+        .btn:hover { background: var(--toxic); color: #000; }
 
-        .card {
-            background: #111;
-            border: 1px solid #333;
-            padding: 20px;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .card:hover {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
-            transform: translateY(-5px);
-        }
+        /* Особые стили */
+        .danger-card { border: 1px solid var(--warning); box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.1); }
+        .danger-card .name, .danger-card .new { color: var(--warning); }
+        .danger-card .btn { border-color: var(--warning); color: var(--warning); }
+        .danger-card .btn:hover { background: var(--warning); color: #000; }
 
-        .rank-img {
-            width: 100%;
-            height: 160px;
-            background: #1a1a1a;
-            margin-bottom: 15px;
-            object-fit: cover;
-            border: 1px solid #222;
-        }
-
-        .rank-name { font-size: 1.8em; font-weight: bold; color: #fff; margin-bottom: 10px; }
-        .price-box { margin: 15px 0; }
-        .old-price { text-decoration: line-through; color: #555; font-size: 1em; }
-        .new-price { font-size: 2em; color: var(--neon-green); font-weight: bold; }
-
-        .buy-btn {
-            display: block;
-            padding: 12px;
-            border: 2px solid var(--neon-green);
-            color: var(--neon-green);
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .buy-btn:hover {
-            background: var(--neon-green);
-            color: #000;
-        }
-
-        /* Особая карточка DANGER */
-        .card.premium { border: 2px solid var(--toxic-yellow); background: rgba(219, 255, 0, 0.02); }
-        .card.premium .rank-name { color: var(--toxic-yellow); }
-        .card.premium .buy-btn { border-color: var(--toxic-yellow); color: var(--toxic-yellow); }
-        .card.premium .buy-btn:hover { background: var(--toxic-yellow); color: #000; }
-
-        footer {
-            margin-top: 60px;
-            padding: 40px;
-            color: #444;
-            border-top: 1px solid #222;
-        }
+        footer { margin-top: 80px; padding: 40px; border-top: 1px solid #222; color: #444; font-size: 0.8em; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>DANGER LAND</h1>
-        <div class="server-ip" onclick="copyIP()">
-            <span class="ip-label">НАЖМИ, ЧТОБЫ КОПИРОВАТЬ IP</span>
-            <span class="ip-address" id="serverIp">dangerland.mcsh.io</span>
-        </div>
-        <p class="promo-text">☢ ОБНАРУЖЕНА ВЫСОКАЯ КОНЦЕНТРАЦИЯ СКИДОК -50% ☢</p>
-    </header>
+    <h1>DANGER LAND</h1>
 
-    <div class="shop-grid">
+    <div class="ip-block" onclick="copyIP()">
+        <span style="font-size: 0.7em;">СИСТЕМА ПОДКЛЮЧЕНИЯ:</span>
+        <span class="ip-address" id="ip">dangerland.mcsh.io</span>
+    </div>
+
+    <div class="grid">
         <!-- Scavenger -->
         <div class="card">
-            <img src="1.png" alt="Scavenger" class="rank-img">
-            <div class="rank-name">Scavenger</div>
-            <div class="price-box">
-                <span class="old-price">58р.</span><br>
-                <span class="new-price">29р.</span>
-            </div>
-            <a href="https://donationalerts.com" class="buy-btn">ИЗЪЯТЬ</a>
+            <img src="1.png" alt="Rank">
+            <div class="name">Scavenger</div>
+            <div class="price"><span class="old">58р.</span> <span class="new">29р.</span></div>
+            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
         </div>
 
         <!-- Stalker -->
         <div class="card">
-            <img src="2.png" alt="Stalker" class="rank-img">
-            <div class="rank-name">Stalker</div>
-            <div class="price-box">
-                <span class="old-price">198р.</span><br>
-                <span class="new-price">99р.</span>
-            </div>
-            <a href="https://donationalerts.com" class="buy-btn">ИЗЪЯТЬ</a>
+            <img src="2.png" alt="Rank">
+            <div class="name">Stalker</div>
+            <div class="price"><span class="old">198р.</span> <span class="new">99р.</span></div>
+            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
         </div>
 
         <!-- Nomad -->
         <div class="card">
-            <img src="3.png" alt="Nomad" class="rank-img">
-            <div class="rank-name">Nomad</div>
-            <div class="price-box">
-                <span class="old-price">350р.</span><br>
-                <span class="new-price">175р.</span>
-            </div>
-            <a href="https://donationalerts.com" class="buy-btn">ИЗЪЯТЬ</a>
+            <img src="3.png" alt="Rank">
+            <div class="name">Nomad</div>
+            <div class="price"><span class="old">350р.</span> <span class="new">175р.</span></div>
+            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
         </div>
 
         <!-- Raider -->
         <div class="card">
-            <img src="4.png" alt="Raider" class="rank-img">
-            <div class="rank-name">Raider</div>
-            <div class="price-box">
-                <span class="old-price">590р.</span><br>
-                <span class="new-price">295р.</span>
-            </div>
-            <a href="https://donationalerts.com5" class="buy-btn">ИЗЪЯТЬ</a>
+            <img src="4.png" alt="Rank">
+            <div class="name">Raider</div>
+            <div class="price"><span class="old">590р.</span> <span class="new">295р.</span></div>
+            <a href="https://donationalerts.com5" class="btn">ВЫКУПИТЬ</a>
         </div>
 
-        <!-- Phantom -->
+        <!-- Mercenary -->
         <div class="card">
-            <img src="5.png" alt="Phantom" class="rank-img">
-            <div class="rank-name">Phantom</div>
-            <div class="price-box">
-                <span class="old-price">1200р.</span><br>
-                <span class="new-price">600р.</span>
-            </div>
-            <a href="https://donationalerts.com" class="buy-btn">ИЗЪЯТЬ</a>
+            <img src="5.png" alt="Rank">
+            <div class="name">Mercenary</div>
+            <div class="price"><span class="old">850р.</span> <span class="new">425р.</span></div>
+            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
+        </div>
+
+        <!-- Hunter -->
+        <div class="card">
+            <img src="6.png" alt="Rank">
+            <div class="name">Hunter</div>
+            <div class="price"><span class="old">1900р.</span> <span class="new">950р.</span></div>
+            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
         </div>
 
         <!-- Survivor -->
         <div class="card">
-            <img src="6.png" alt="Survivor" class="rank-img">
-            <div class="rank-name">Survivor</div>
-            <div class="price-box">
-                <span class="old-price">3200р.</span><br>
-                <span class="new-price">1600р.</span>
-            </div>
-            <a href="https://donationalerts.com" class="buy-btn">ИЗЪЯТЬ</a>
+            <img src="7.png" alt="Rank">
+            <div class="name">Survivor</div>
+            <div class="price"><span class="old">3200р.</span> <span class="new">1600р.</span></div>
+            <a href="https://donationalerts.com" class="btn">ВЫКУПИТЬ</a>
         </div>
 
         <!-- Danger -->
-        <div class="card premium">
-            <img src="7.png" alt="Danger" class="rank-img">
-            <div class="rank-name">DANGER</div>
-            <div class="price-box">
-                <span class="old-price">5990р.</span><br>
-                <span class="new-price">2950р.</span>
-            </div>
-            <a href="https://donationalerts.com50" class="buy-btn">ВЫЖИТЬ</a>
+        <div class="card danger-card">
+            <img src="8.png" alt="Rank">
+            <div class="name">DANGER</div>
+            <div class="price"><span class="old">5990р.</span> <span class="new">2950р.</span></div>
+            <a href="https://donationalerts.com50" class="btn">ВЫЖИТЬ</a>
         </div>
     </div>
 
     <footer>
-        <p>ПРИ ОПЛАТЕ УКАЗЫВАЙТЕ ВАШ НИК В СООБЩЕНИИ</p>
-        <p>Danger Land — Зона отчуждения © 2026</p>
+        <p>ВНИМАНИЕ: УКАЗЫВАЙТЕ НИК В СООБЩЕНИИ. ОШИБКА ВЕДЕТ К ПОТЕРЕ РЕСУРСОВ.</p>
+        <p>TERMINAL v2.6 // DANGER LAND PROJECT</p>
     </footer>
 
     <script>
         function copyIP() {
-            const ip = document.getElementById('serverIp').innerText;
-            navigator.clipboard.writeText(ip);
-            alert('IP-адрес скопирован в буфер обмена!');
+            const el = document.getElementById('ip');
+            navigator.clipboard.writeText(el.innerText);
+            alert('Координаты скопированы: ' + el.innerText);
         }
     </script>
-
 </body>
 </html>
-
