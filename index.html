@@ -2,319 +2,245 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>DANGER LAND // TERMINAL v4.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DANGER LAND — ТЕРМИНАЛ</title>
     <style>
-        @import url('https://googleapis.com');
-
-        :root {
-            --glow: #39ff14;
-            --bg: #050505;
-            --warn: #ff3c00;
-            --sub: #1a1a1a;
+        :root { 
+            --toxic: #39ff14; 
+            --warning: #ffcc00; 
+            --dead-zone: #050505; 
+            --vk: #0077ff; 
+            --tg: #24A1DE; 
+            --ds: #5865F2; 
+            --case: #ff00ff; 
+        }
+        
+        body { 
+            background: var(--dead-zone); 
+            color: #aaa; 
+            font-family: 'Courier New', Courier, monospace; 
+            margin: 0; 
+            padding: 0;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+                url('https://unsplash.com');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
         }
 
-        body {
-            background-color: var(--bg);
-            color: var(--glow);
-            font-family: 'VT323', monospace;
-            margin: 0;
-            overflow-x: hidden;
-            background-image: radial-gradient(rgba(0, 150, 0, 0.1) 50%, black 140%);
-        }
-
-        /* Эффект мерцания ЭЛТ-монитора */
         body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 100;
-            background-size: 100% 3px, 3px 100%;
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+            background-size: 100% 4px;
             pointer-events: none;
+            z-index: 100;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 10;
-        }
+        .container { padding: 40px 20px; position: relative; z-index: 10; }
 
-        header {
-            border: 1px solid var(--glow);
-            padding: 20px;
-            margin-bottom: 40px;
-            background: rgba(0, 20, 0, 0.2);
-        }
-
-        @keyframes glitch {
-            0% { transform: skew(0deg); }
-            10% { transform: skew(2deg); opacity: 0.8; }
-            20% { transform: skew(-1deg); }
-            30% { transform: skew(0deg); }
-            100% { transform: skew(0deg); }
-        }
-
-        h1 {
-            font-size: 5em;
-            margin: 0;
+        h1 { 
+            color: var(--toxic); 
+            font-size: clamp(2.5em, 10vw, 4.5em); 
+            letter-spacing: 15px; 
+            margin: 20px 0; 
+            text-shadow: 0 0 20px var(--toxic); 
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 10px;
-            animation: glitch 3s infinite;
-            text-shadow: 2px 2px 0px rgba(57, 255, 20, 0.3);
         }
-
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid var(--glow);
-            margin-top: 10px;
-            padding-top: 10px;
-            font-size: 1.4em;
-            opacity: 0.8;
-        }
-
-        .ip-panel {
-            border: 2px dashed var(--glow);
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 60px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .ip-panel:hover {
-            background: var(--glow);
-            color: #000;
-        }
-
-        .section-header {
-            background: var(--glow);
-            color: #000;
-            padding: 5px 25px;
-            font-size: 2em;
+        
+        .section-title { 
+            color: #fff; 
+            font-size: 1.5em; 
+            margin: 60px 0 30px; 
+            letter-spacing: 8px; 
+            text-transform: uppercase; 
+            border-bottom: 2px solid var(--toxic);
             display: inline-block;
-            margin-bottom: 30px;
-            text-transform: uppercase;
+            padding-bottom: 5px;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-            margin-bottom: 70px;
-        }
-
-        .card {
-            border: 1px solid rgba(57, 255, 20, 0.3);
-            background: rgba(10, 10, 10, 0.8);
-            padding: 20px;
+        .ip-block {
+            border: 1px solid var(--toxic); 
+            display: inline-block; 
+            padding: 20px 40px;
+            background: rgba(0, 255, 0, 0.05); 
+            cursor: pointer; 
+            margin-bottom: 50px;
             transition: 0.3s;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        }
+        .ip-block:hover { 
+            background: var(--toxic); 
+            color: #000; 
+            box-shadow: 0 0 50px var(--toxic); 
+        }
+        .ip-address { font-size: 1.8em; font-weight: bold; display: block; letter-spacing: 2px; }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
         }
 
-        .card:hover {
-            border-color: var(--glow);
-            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
-            transform: translateY(-5px);
+        .card { 
+            background: rgba(10, 10, 10, 0.95); 
+            border: 1px solid #222; 
+            padding: 25px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card:hover { 
+            border-color: var(--toxic); 
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
 
-        .card img {
-            width: 100%;
-            height: 160px;
-            object-fit: contain;
-            margin-bottom: 15px;
-            filter: grayscale(1) brightness(1.2) sepia(1) hue-rotate(70deg);
+        .name { font-size: 1.5em; color: #fff; font-weight: bold; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
+        .price { margin: 20px 0; }
+        .old { text-decoration: line-through; color: #444; font-size: 0.9em; }
+        .new { font-size: 2em; color: var(--toxic); font-weight: bold; display: block; }
+
+        .btn { 
+            display: block; 
+            padding: 15px; 
+            border: 1px solid var(--toxic); 
+            color: var(--toxic);
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            letter-spacing: 2px;
         }
+        .btn:hover { background: var(--toxic); color: #000; }
 
-        .item-name {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #fff;
+        .danger-card { border: 2px solid var(--warning) !important; background: rgba(30, 25, 0, 0.95) !important; }
+        .danger-card .new, .danger-card .btn { color: var(--warning); border-color: var(--warning); }
+        .danger-card .btn:hover { background: var(--warning); color: #000; }
+
+        .case-card { border: 1px solid var(--case) !important; }
+        .case-card .new, .case-card .btn { color: var(--case); border-color: var(--case); }
+        .case-card .btn:hover { background: var(--case); color: #fff; }
+
+        .socials-container { 
+            margin-top: 100px; 
+            padding: 60px 20px; 
+            background: rgba(0,0,0,0.95); 
+            border-top: 2px solid #111; 
         }
-
-        .price-box {
-            font-size: 1.8em;
-            margin-bottom: 20px;
-        }
-
-        .old-p { text-decoration: line-through; opacity: 0.4; font-size: 0.7em; }
-
-        .btn-buy {
-            display: block;
-            border: 1px solid var(--glow);
-            color: var(--glow);
-            text-decoration: none;
-            padding: 12px;
-            text-align: center;
-            font-size: 1.4em;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-
-        .btn-buy:hover {
-            background: var(--glow);
-            color: #000;
-        }
-
-        /* Красная карточка DANGER */
-        .danger-zone {
-            border: 1px solid var(--warn) !important;
-            background: rgba(30, 0, 0, 0.3);
-        }
-        .danger-zone .item-name, .danger-zone .price-box { color: var(--warn); }
-        .danger-zone .btn-buy { border-color: var(--warn); color: var(--warn); }
-        .danger-zone .btn-buy:hover { background: var(--warn); color: #fff; }
-
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 50px;
-        }
-
         .soc-btn {
-            border: 1px solid var(--glow);
-            padding: 15px 30px;
-            color: var(--glow);
-            text-decoration: none;
-            font-size: 1.5em;
+            text-decoration: none; 
+            padding: 15px 30px; 
+            font-weight: bold; 
+            margin: 10px;
+            display: inline-block;
+            border: 2px solid;
             transition: 0.3s;
         }
+        .vk { color: var(--vk); border-color: var(--vk); }
+        .tg { color: var(--tg); border-color: var(--tg); }
+        .ds { color: var(--ds); border-color: var(--ds); }
+        .soc-btn:hover { background: currentColor; color: #fff; box-shadow: 0 0 25px currentColor; }
 
-        .soc-btn:hover {
-            background: rgba(57, 255, 20, 0.1);
-            box-shadow: 0 0 15px var(--glow);
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            opacity: 0.4;
-            font-size: 1.1em;
-            border-top: 1px solid rgba(57, 255, 20, 0.1);
-        }
+        footer { padding: 50px; background: #000; color: #333; font-size: 0.7em; letter-spacing: 3px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <h1>DANGER LAND</h1>
-        <div class="status-bar">
-            <span>REGION: ANARCHY_ZONE</span>
-            <span>OS: TERMINAL_4.0</span>
-            <span>RADIATION: HIGH</span>
-        </div>
-    </header>
+    <h1>DANGER LAND</h1>
 
-    <div class="ip-panel" onclick="copyIP()">
-        [ НАЖМИ ДЛЯ КОПИРОВАНИЯ СИГНАЛА ]<br>
-        <span id="ip" style="font-size: 2.5em; letter-spacing: 5px;">dangerland.mcsh.io</span>
+    <div class="ip-block" onclick="copyIP()">
+        <span style="font-size: 0.7em; color: #555; letter-spacing: 3px;">СИСТЕМА ПОДКЛЮЧЕНИЯ:</span>
+        <span class="ip-address" id="ip">dangerland.mcsh.io</span>
+        <span style="font-size: 0.6em; color: var(--toxic);">[ КЛИКНИ ЧТОБЫ СКОПИРОВАТЬ ]</span>
     </div>
 
-    <div class="section-header">ПАКЕТЫ_ВЫЖИВАНИЯ</div>
-    <div class="grid">
-        <!-- Привилегии -->
-        <div class="card">
-            <img src="1.png" alt="icon">
-            <div class="item-name">Scavenger</div>
-            <div class="price-box"><span class="old-p">58р.</span> 29р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ВЗЛОМАТЬ</a>
-        </div>
-        <div class="card">
-            <img src="2.png" alt="icon">
-            <div class="item-name">Stalker</div>
-            <div class="price-box"><span class="old-p">198р.</span> 99р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ВЗЛОМАТЬ</a>
-        </div>
-        <div class="card">
-            <img src="3.png" alt="icon">
-            <div class="item-name">Nomad</div>
-            <div class="price-box"><span class="old-p">350р.</span> 175р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ВЗЛОМАТЬ</a>
-        </div>
-        <div class="card">
-            <img src="4.png" alt="icon">
-            <div class="item-name">Raider</div>
-            <div class="price-box"><span class="old-p">590р.</span> 295р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ВЗЛОМАТЬ</a>
-        </div>
-        <div class="card">
-            <img src="5.png" alt="icon">
-            <div class="item-name">Mercenary</div>
-            <div class="price-box"><span class="old-p">850р.</span> 425р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ВЗЛОМАТЬ</a>
-        </div>
-        <div class="card">
-            <img src="6.png" alt="icon">
-            <div class="item-name">Hunter</div>
-            <div class="price-box"><span class="old-p">1900р.</span> 950р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ВЗЛОМАТЬ</a>
-        </div>
-        <div class="card">
-            <img src="7.png" alt="icon">
-            <div class="item-name">Survivor</div>
-            <div class="price-box"><span class="old-p">3200р.</span> 1600р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ВЗЛОМАТЬ</a>
-        </div>
-        <!-- Ультимативный донат -->
-        <div class="card danger-zone">
-            <img src="8.png" alt="icon">
-            <div class="item-name">DANGER</div>
-            <div class="price-box"><span class="old-p">5990р.</span> 2950р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ВЫЖИТЬ</a>
-        </div>
-    </div>
-
-    <div class="section-header">РЕСУРСНЫЕ_КОНТЕЙНЕРЫ</div>
+    <br>
+    <div class="section-title">⚡ ПРИВИЛЕГИИ ⚡</div>
+    
     <div class="grid">
         <div class="card">
-            <img src="9.png" alt="icon">
-            <div class="item-name">ДОНАТ-КЕЙС</div>
-            <div class="price-box">89.00р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ОТКРЫТЬ</a>
+            <div class="name">Scavenger</div>
+            <div class="price"><span class="old">58р.</span><span class="new">29р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
         <div class="card">
-            <img src="10.png" alt="icon">
-            <div class="item-name">ВАЛЮТНЫЙ КЕЙС</div>
-            <div class="price-box">49.00р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ОТКРЫТЬ</a>
+            <div class="name">Stalker</div>
+            <div class="price"><span class="old">198р.</span><span class="new">99р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
         </div>
         <div class="card">
-            <img src="11.png" alt="icon">
-            <div class="item-name">DANGER КЕЙС</div>
-            <div class="price-box">50.00р.</div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn-buy" target="_blank">ОТКРЫТЬ</a>
+            <div class="name">Nomad</div>
+            <div class="price"><span class="old">350р.</span><span class="new">175р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
+        </div>
+        <div class="card">
+            <div class="name">Raider</div>
+            <div class="price"><span class="old">590р.</span><span class="new">295р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
+        </div>
+        <div class="card">
+            <div class="name">Mercenary</div>
+            <div class="price"><span class="old">850р.</span><span class="new">425р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
+        </div>
+        <div class="card">
+            <div class="name">Hunter</div>
+            <div class="price"><span class="old">1900р.</span><span class="new">950р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
+        </div>
+        <div class="card">
+            <div class="name">Survivor</div>
+            <div class="price"><span class="old">3200р.</span><span class="new">1600р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
+        </div>
+        <div class="card danger-card">
+            <div class="name">DANGER</div>
+            <div class="price"><span class="old">5990р.</span><span class="new">2950р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫЖИТЬ</a>
         </div>
     </div>
 
-    <div class="section-header">КАНАЛЫ_СВЯЗИ</div>
-    <div class="socials">
-        <a href="https://vk.ru/club236879005" class="soc-btn" target="_blank">VK_COMMUNITY</a>
-        <a href="https://t.me/mcdangerland" class="soc-btn" target="_blank">TELEGRAM_FEED</a>
-        <a href="https://discord.gg/NTmBYP6dU" class="soc-btn" target="_blank">DISCORD_SERVER</a>
+    <div class="section-title">📦 КЕЙСЫ 📦</div>
+    
+    <div class="grid">
+        <div class="card case-card">
+            <div class="name">Донат-Кейс</div>
+            <div class="price"><span class="new">89р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">КУПИТЬ</a>
+        </div>
+        <div class="card case-card">
+            <div class="name">Валютный Кейс</div>
+            <div class="price"><span class="new">49р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ОТКРЫТЬ</a>
+        </div>
+        <div class="card case-card">
+            <div class="name">Danger Кейс</div>
+            <div class="price"><span class="new">50р.</span></div>
+            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ОТКРЫТЬ</a>
+        </div>
     </div>
-
-    <footer>
-        © DANGER LAND PROJECT 2026 // ПРИ ОПЛАТЕ УКАЗЫВАЙТЕ ИГРОВОЙ НИК. <br>
-        [СИСТЕМА ВЗЛОМА АКТИВНА. НИКАКИХ ПРАВИЛ. ТОЛЬКО АНАРХИЯ.]
-    </footer>
 </div>
+
+<div class="socials-container">
+    <div style="color: #fff; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">СВЯЗЬ С ЦЕНТРОМ</div>
+    <a href="https://vk.ru/club236879005" class="soc-btn vk" target="_blank">ВКОНТАКТЕ</a>
+    <a href="https://t.me/mcdangerland" class="soc-btn tg" target="_blank">ТЕЛЕГРАМ</a>
+    <a href="https://discord.gg/NTmBYP6dU" class="soc-btn ds" target="_blank">DISCORD</a>
+</div>
+
+<footer>
+    <p>DANGER LAND PROJECT // EST. © 2026</p>
+    <p>ПРИ ОПЛАТЕ УКАЗЫВАЙТЕ НИК. IP: dangerland.mcsh.io</p>
+</footer>
 
 <script>
     function copyIP() {
-        const ip = document.getElementById('ip').innerText;
+        const ip = "dangerland.mcsh.io";
         navigator.clipboard.writeText(ip);
-        alert("СИГНАЛ ПЕРЕХВАЧЕН. IP СКОПИРОВАН В ПДА.");
+        alert("IP скопирован: " + ip);
     }
 </script>
 
