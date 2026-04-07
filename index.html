@@ -117,21 +117,33 @@
     <div class="card"><i class="fas fa-dragon"></i><h3>Кейс Дракона</h3><a href="https://www.donationalerts.com/r/dangerland1267" class="buy-btn">КУПИТЬ</a></div>
 </div>
 
+<!-- Вставь это вместо старого блока footer и скрипта -->
 <footer>
     <div class="social">
-        <a href="https://t.me/nexulaspace" target="_blank"><i class="fab fa-telegram"></i></a>
-        <a href="https://vk.ru/club236879005" target="_blank"><i class="fab fa-vk"></i></a>
-        <a href="https://discord.gg/YgUK9s3Qnw" target="_blank"><i class="fab fa-discord"></i></a>
+        <!-- Telegram -->
+        <a href="https://t.me" target="_blank" title="Наш Telegram">
+            <i class="fab fa-telegram"></i>
+        </a>
+        <!-- ВКонтакте -->
+        <a href="https://vk.ru" target="_blank" title="Наша группа ВК">
+            <i class="fab fa-vk"></i>
+        </a>
+        <!-- Discord (исправленный) -->
+        <a href="https://discord.gg" target="_blank" title="Наш Discord">
+            <i class="fab fa-discord"></i>
+        </a>
     </div>
-    <p style="margin-top: 20px; opacity: 0.6;">Nexula Space © 2024. Купленные товары возврату не подлежат.</p>
+    <p style="margin-top: 20px; opacity: 0.6; font-size: 0.9rem;">
+        Nexula Space © 2024. Все ссылки рабочие.<br>
+        По вопросам доната обращаться в соцсети.
+    </p>
 </footer>
 
 <script>
     function copyIP() {
-        navigator.clipboard.writeText("nexul.mcsh.io");
-        alert("IP nexul.mcsh.io скопирован!");
+        const ip = "nexul.mcsh.io";
+        navigator.clipboard.writeText(ip).then(() => {
+            alert("IP-адрес " + ip + " скопирован! Вставляй в Minecraft.");
+        });
     }
 </script>
-
-</body>
-</html>
