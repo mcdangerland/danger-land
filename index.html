@@ -3,244 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DANGER LAND — ТЕРМИНАЛ</title>
+    <title>Nexula Space | Официальный сайт</title>
     <style>
-        :root { 
-            --toxic: #39ff14; 
-            --warning: #ffcc00; 
-            --dead-zone: #050505; 
-            --vk: #0077ff; 
-            --tg: #24A1DE; 
-            --ds: #5865F2; 
-            --case: #ff00ff; 
+        /* Основные цвета и шрифты */
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --accent: #58a6ff;
+            --text: #c9d1d9;
+            --price: #3fb950;
+            --border: #30363d;
         }
-        
-        body { 
-            background: var(--dead-zone); 
-            color: #aaa; 
-            font-family: 'Courier New', Courier, monospace; 
-            margin: 0; 
-            padding: 0;
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
-                url('https://avatars.mds.yandex.net/i?id=d0a9e245c17c9d4c7f662636e71a137503b84bc0-16971848-images-thumbs&n=13');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Шапка и IP */
+        header {
             text-align: center;
+            padding: 60px 20px 40px;
         }
-
-        body::before {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 100;
+        h1 { color: #fff; font-size: 3.5rem; margin: 0; text-transform: uppercase; letter-spacing: 3px; }
+        .ip-box {
+            margin-top: 20px;
+            cursor: pointer;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid var(--accent);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            transition: 0.3s;
         }
+        .ip-box:hover { background: rgba(88, 166, 255, 0.2); transform: scale(1.05); }
+        #ip-text { font-weight: bold; color: var(--accent); }
 
-        .container { padding: 40px 20px; position: relative; z-index: 10; }
-
-        h1 { 
-            color: var(--toxic); 
-            font-size: clamp(2.5em, 10vw, 4.5em); 
-            letter-spacing: 15px; 
-            margin: 20px 0; 
-            text-shadow: 0 0 20px var(--toxic); 
-            font-weight: 900;
-            text-transform: uppercase;
+        /* Сетка товаров */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px 0;
         }
+        .section-title { width: 100%; text-align: center; color: #fff; margin-top: 40px; font-size: 2rem; }
+
+        /* Карточка товара */
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .card h3 { margin: 0; color: #fff; font-size: 1.8rem; }
+        .price { font-size: 1.5rem; color: var(--price); margin: 15px 0; font-weight: bold; }
         
-        .section-title { 
-            color: #fff; 
-            font-size: 1.5em; 
-            margin: 60px 0 30px; 
-            letter-spacing: 8px; 
-            text-transform: uppercase; 
-            border-bottom: 2px solid var(--toxic);
-            display: inline-block;
-            padding-bottom: 5px;
+        /* Кнопка купить */
+        .buy-btn {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.2s;
         }
+        .buy-btn:hover { opacity: 0.9; }
 
-        .ip-block {
-            border: 1px solid var(--toxic); 
-            display: inline-block; 
-            padding: 20px 40px;
-            background: rgba(0, 255, 0, 0.05); 
-            cursor: pointer; 
-            margin-bottom: 50px;
+        /* Футер и Соцсети */
+        footer {
+            width: 100%;
+            background: #010409;
+            padding: 50px 0;
+            margin-top: 60px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        .links a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 1.1rem;
             transition: 0.3s;
         }
-        .ip-block:hover { 
-            background: var(--toxic); 
-            color: #000; 
-            box-shadow: 0 0 50px var(--toxic); 
-        }
-        .ip-address { font-size: 1.8em; font-weight: bold; display: block; letter-spacing: 2px; }
-
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-        }
-
-        .card { 
-            background: rgba(10, 10, 10, 0.95); 
-            border: 1px solid #222; 
-            padding: 25px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .card:hover { 
-            border-color: var(--toxic); 
-            transform: translateY(-10px); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-        }
-
-        .name { font-size: 1.5em; color: #fff; font-weight: bold; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
-        .price { margin: 20px 0; }
-        .old { text-decoration: line-through; color: #444; font-size: 0.9em; }
-        .new { font-size: 2em; color: var(--toxic); font-weight: bold; display: block; }
-
-        .btn { 
-            display: block; 
-            padding: 15px; 
-            border: 1px solid var(--toxic); 
-            color: var(--toxic);
-            text-decoration: none; 
-            font-weight: bold; 
-            transition: 0.3s; 
-            letter-spacing: 2px;
-        }
-        .btn:hover { background: var(--toxic); color: #000; }
-
-        .danger-card { border: 2px solid var(--warning) !important; background: rgba(30, 25, 0, 0.95) !important; }
-        .danger-card .new, .danger-card .btn { color: var(--warning); border-color: var(--warning); }
-        .danger-card .btn:hover { background: var(--warning); color: #000; }
-
-        .case-card { border: 1px solid var(--case) !important; }
-        .case-card .new, .case-card .btn { color: var(--case); border-color: var(--case); }
-        .case-card .btn:hover { background: var(--case); color: #fff; }
-
-        .socials-container { 
-            margin-top: 100px; 
-            padding: 60px 20px; 
-            background: rgba(0,0,0,0.95); 
-            border-top: 2px solid #111; 
-        }
-        .soc-btn {
-            text-decoration: none; 
-            padding: 15px 30px; 
-            font-weight: bold; 
-            margin: 10px;
-            display: inline-block;
-            border: 2px solid;
-            transition: 0.3s;
-        }
-        .vk { color: var(--vk); border-color: var(--vk); }
-        .tg { color: var(--tg); border-color: var(--tg); }
-        .ds { color: var(--ds); border-color: var(--ds); }
-        .soc-btn:hover { background: currentColor; color: #fff; box-shadow: 0 0 25px currentColor; }
-
-        footer { padding: 50px; background: #000; color: #333; font-size: 0.7em; letter-spacing: 3px; }
+        .links a:hover { color: var(--accent); }
+        .copyright { margin-top: 20px; font-size: 0.8rem; opacity: 0.5; }
     </style>
 </head>
 <body>
 
+<header>
+    <h1>NEXULA SPACE</h1>
+    <div class="ip-box" onclick="copyToClipboard()" title="Нажми, чтобы скопировать IP">
+        <span id="ip-text">IP: nexul.mcsh.io</span>
+    </div>
+</header>
+
+<h2 class="section-title">ПРИВИЛЕГИИ</h2>
 <div class="container">
-    <h1>DANGER LAND</h1>
-
-    <div class="ip-block" onclick="copyIP()">
-        <span style="font-size: 0.7em; color: #555; letter-spacing: 3px;">СИСТЕМА ПОДКЛЮЧЕНИЯ:</span>
-        <span class="ip-address" id="ip">dangerland.mcsh.io</span>
-        <span style="font-size: 0.6em; color: var(--toxic);">[ КЛИКНИ ЧТОБЫ СКОПИРОВАТЬ ]</span>
-    </div>
-
-    <br>
-    <div class="section-title">⚡ ПРИВИЛЕГИИ ⚡</div>
-    
-    <div class="grid">
-        <div class="card">
-            <div class="name">Scavenger</div>
-            <div class="price"><span class="old">58р.</span><span class="new">29р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
-        </div>
-        <div class="card">
-            <div class="name">Stalker</div>
-            <div class="price"><span class="old">198р.</span><span class="new">99р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
-        </div>
-        <div class="card">
-            <div class="name">Nomad</div>
-            <div class="price"><span class="old">350р.</span><span class="new">175р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
-        </div>
-        <div class="card">
-            <div class="name">Raider</div>
-            <div class="price"><span class="old">590р.</span><span class="new">295р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
-        </div>
-        <div class="card">
-            <div class="name">Mercenary</div>
-            <div class="price"><span class="old">850р.</span><span class="new">425р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
-        </div>
-        <div class="card">
-            <div class="name">Hunter</div>
-            <div class="price"><span class="old">1900р.</span><span class="new">950р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
-        </div>
-        <div class="card">
-            <div class="name">Survivor</div>
-            <div class="price"><span class="old">3200р.</span><span class="new">1600р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫКУПИТЬ</a>
-        </div>
-        <div class="card danger-card">
-            <div class="name">DANGER</div>
-            <div class="price"><span class="old">5990р.</span><span class="new">2950р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ВЫЖИТЬ</a>
-        </div>
-    </div>
-
-    <div class="section-title">📦 КЕЙСЫ 📦</div>
-    
-    <div class="grid">
-        <div class="card case-card">
-            <div class="name">Донат-Кейс</div>
-            <div class="price"><span class="new">89р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">КУПИТЬ</a>
-        </div>
-        <div class="card case-card">
-            <div class="name">Валютный Кейс</div>
-            <div class="price"><span class="new">49р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ОТКРЫТЬ</a>
-        </div>
-        <div class="card case-card">
-            <div class="name">Danger Кейс</div>
-            <div class="price"><span class="new">50р.</span></div>
-            <a href="https://www.donationalerts.com/r/dangerland1267" class="btn" target="_blank">ОТКРЫТЬ</a>
-        </div>
-    </div>
+    <div class="card"><h3>COSMO</h3><div class="price">29₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>ORBIT</h3><div class="price">59₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>NOVA</h3><div class="price">159₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>ASTRA</h3><div class="price">249₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>PULSAR</h3><div class="price">379₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>ECLIPSE</h3><div class="price">489₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>NEBULA</h3><div class="price">689₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>VOID</h3><div class="price">939₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>AnFisa</h3><div class="price">1499₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
 </div>
 
-<div class="socials-container">
-    <div style="color: #fff; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">СВЯЗЬ С ЦЕНТРОМ</div>
-    <a href="https://vk.ru/club236879005" class="soc-btn vk" target="_blank">ВКОНТАКТЕ</a>
-    <a href="https://t.me/mcdangerland" class="soc-btn tg" target="_blank">ТЕЛЕГРАМ</a>
-    <a href="https://discord.gg/NTmBYP6dU" class="soc-btn ds" target="_blank">DISCORD</a>
+<h2 class="section-title">КЕЙСЫ</h2>
+<div class="container">
+    <div class="card"><h3>Донат кейс</h3><div class="price">59₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>Кейс грифа</h3><div class="price">59₽</div><a href="" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>Кейс N-Credits</h3><div class="price">59₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
+    <div class="card"><h3>Кейс N-Buck's</h3><div class="price">59₽</div><a href="https://www.donationalerts.com/r/dangerland1267" target="_blank" class="buy-btn">КУПИТЬ</a></div>
 </div>
 
 <footer>
-    <p>DANGER LAND PROJECT // EST. © 2026</p>
-    <p>ПРИ ОПЛАТЕ УКАЗЫВАЙТЕ НИК. IP: dangerland.mcsh.io</p>
+    <div class="links">
+        <a href="https://t.me/nexulaspace" target="_blank">Telegram</a>
+        <a href="https://vk.ru/club236879005" target="_blank">ВКонтакте</a>
+        <a href="https://discord.gg/YgUK9s3Qnw" target="_blank">Discord</a>
+    </div>
+    <div class="copyright">© 2024 Nexula Space. Сервер не связан с Mojang AB.</div>
 </footer>
 
 <script>
-    function copyIP() {
-        const ip = "dangerland.mcsh.io";
-        navigator.clipboard.writeText(ip);
-        alert("IP скопирован: " + ip);
+    function copyToClipboard() {
+        const ip = "nexul.mcsh.io";
+        navigator.clipboard.writeText(ip).then(() => {
+            const el = document.getElementById('ip-text');
+            const originalText = el.innerText;
+            el.innerText = "IP СКОПИРОВАН!";
+            setTimeout(() => {
+                el.innerText = originalText;
+            }, 2000);
+        });
     }
 </script>
 
